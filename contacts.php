@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
                             <h2 class="text-center mb-4">Свяжитесь с нами</h2>
                             <p class="text-center">Телефон: +7 (999) 123-45-67</p>
                             <p class="text-center">Email: info@gostivoldom.ru</p>
-                            <p class="text-center">Адрес: г. Москва, ул. Примерная, д. 1</p>
+                            <p class="text-center">Адрес: г. Курск, ул. Примерная, д. 1</p>
 
                             <?php if (isset($success)) echo "<div class='alert alert-success'>$success</div>"; ?>
                             <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
