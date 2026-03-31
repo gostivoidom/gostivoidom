@@ -8,7 +8,8 @@ $conn = new mysqli($host, $db_user, $db_pass, $db_name, 3306);
 if ($conn->connect_error) {
     die("Ошибка подключения: " . $conn->connect_error);
 }
-$conn->set_charset("utf8");
+$conn->set_charset("utf8mb4");
+$conn->query("SET NAMES utf8mb4");
 $conn->query("CREATE TABLE IF NOT EXISTS feedback_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
