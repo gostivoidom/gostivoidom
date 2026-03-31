@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$title = "Админ-панель - Гостевой дом 'Уют'";
+$title = 'Админ-панель - Гостевой дом "Уют"';
 session_start(); // Только один вызов
 
 // Проверка авторизации администратора
