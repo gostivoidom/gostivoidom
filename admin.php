@@ -16,62 +16,6 @@ include 'db/connect.php';
 if (!$conn || $conn->connect_error) {
     die("Ошибка подключения к базе данных: " . ($conn->connect_error ?? "Переменная \$conn не определена"));
 }
-echo "<!-- Debug: Подключение к базе успешно -->";
-
-// Получение данных из базы
-$rooms = $conn->prepare("SELECT * FROM rooms");
-$rooms->execute();
-$rooms = $rooms->get_result();
-if (!$rooms) {
-    die("Ошибка запроса номеров: " . $conn->error);
-}
-echo "<!-- Debug: Запрос номеров выполнен, строк: " . $rooms->num_rows . " -->";
-
-$news = $conn->prepare("SELECT * FROM news ORDER BY created_at DESC");
-$news->execute();
-$news = $news->get_result();
-if (!$news) {
-    die("Ошибка запроса новостей: " . $conn->error);
-}
-echo "<!-- Debug: Запрос новостей выполнен, строк: " . $news->num_rows . " -->";
-
-$booked_dates = [];
-$bookings = $conn->prepare("SELECT check_in, check_out FROM bookings WHERE status = 'confirmed'");
-$bookings->execute();
-$bookings = $bookings->get_result();
-if (!$bookings) {
-    echo "<!-- Debug: Ошибка запроса бронирований: " . $conn->error . " -->";
-} else {
-    echo "<!-- Debug: Запрос бронирований выполнен, строк: " . $bookings->num_rows . " -->";
-    while ($booking = $bookings->fetch_assoc()) {
-        $start = new DateTime($booking['check_in']);
-        $end = new DateTime($booking['check_out']);
-        $interval = new DateInterval('P1D');
-        $dateRange = new DatePeriod($start, $interval, $end);
-        foreach ($dateRange as $date) {
-            $booked_dates[] = $date->format('Y-m-d');
-        }
-    }
-}
-$booked_dates_json = json_encode($booked_dates);
-
-$bookings_list = $conn->prepare("SELECT b.id, r.name AS room_name, b.name AS customer_name, b.email, b.phone, b.check_in, b.check_out, b.status FROM bookings b LEFT JOIN rooms r ON b.room_id = r.id ORDER BY b.check_in DESC");
-$bookings_list->execute();
-$bookings_list = $bookings_list->get_result();
-if (!$bookings_list) {
-    echo "<!-- Debug: Ошибка запроса списка бронирований: " . $conn->error . " -->";
-} else {
-    echo "<!-- Debug: Запрос списка бронирований выполнен, строк: " . $bookings_list->num_rows . " -->";
-}
-
-$feedbacks = $conn->prepare("SELECT * FROM feedback_requests ORDER BY created_at DESC");
-$feedbacks->execute();
-$feedbacks = $feedbacks->get_result();
-if (!$feedbacks) {
-    echo "<!-- Debug: Ошибка запроса заявок: " . $conn->error . " -->";
-} else {
-    echo "<!-- Debug: Запрос заявок выполнен, строк: " . $feedbacks->num_rows . " -->";
-}
 
 // Обработка подтверждения бронирования
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_booking'])) {
@@ -322,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_news'])) {
     }
 }
 
-// Обработка редактирования новости
+// Загрузка данных для редактирования
 $edit_news = null;
 if (isset($_GET['edit_news']) && is_numeric($_GET['edit_news'])) {
     $news_id = (int)$_GET['edit_news'];
@@ -330,14 +274,9 @@ if (isset($_GET['edit_news']) && is_numeric($_GET['edit_news'])) {
     $stmt->bind_param("i", $news_id);
     $stmt->execute();
     $edit_news = $stmt->get_result()->fetch_assoc();
-    if (!$edit_news) {
-        header("Location: admin.php?message=" . urlencode("Новость не найдена"));
-        exit;
-    }
     $stmt->close();
 }
 
-// Обработка редактирования номера
 $edit_room = null;
 if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])) {
     $room_id = (int)$_GET['edit_room'];
@@ -345,12 +284,31 @@ if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])) {
     $stmt->bind_param("i", $room_id);
     $stmt->execute();
     $edit_room = $stmt->get_result()->fetch_assoc();
-    if (!$edit_room) {
-        header("Location: admin.php?message=" . urlencode("Номер не найден"));
-        exit;
-    }
     $stmt->close();
 }
+
+// Загрузка данных для отображения
+$rooms = $conn->query("SELECT * FROM rooms");
+$news = $conn->query("SELECT * FROM news ORDER BY created_at DESC");
+
+$booked_dates = [];
+$bookings_result = $conn->query("SELECT check_in, check_out FROM bookings WHERE status = 'confirmed'");
+if ($bookings_result) {
+    while ($booking = $bookings_result->fetch_assoc()) {
+        $start = new DateTime($booking['check_in']);
+        $end = new DateTime($booking['check_out']);
+        $interval = new DateInterval('P1D');
+        $dateRange = new DatePeriod($start, $interval, $end);
+        foreach ($dateRange as $date) {
+            $booked_dates[] = $date->format('Y-m-d');
+        }
+    }
+}
+$booked_dates_json = json_encode($booked_dates);
+
+$bookings_list = $conn->query("SELECT b.id, r.name AS room_name, b.name AS customer_name, b.email, b.phone, b.check_in, b.check_out, b.status FROM bookings b LEFT JOIN rooms r ON b.room_id = r.id ORDER BY b.check_in DESC");
+
+$feedbacks = $conn->query("SELECT * FROM feedback_requests ORDER BY created_at DESC");
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -419,7 +377,7 @@ if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])) {
                         <div id="calendar-container"></div>
                     </div>
 
-                    <h3 class="mb-3">Управление номерами</h3>
+                    <h3 class="mb-3" id="rooms-form">Управление номерами</h3>
                     <form method="POST" enctype="multipart/form-data" class="mb-4">
                         <input type="hidden" name="<?php echo isset($_GET['edit_room']) ? 'edit_room' : 'add_room'; ?>" value="1">
                         <?php if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])): ?>
@@ -463,14 +421,14 @@ if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])) {
                                     <p class="card-text">Цена: <?php echo htmlspecialchars($room['price']); ?> руб./ночь</p>
                                     <p class="card-text">Вместимость: <?php echo htmlspecialchars($room['capacity']); ?> чел.</p>
                                     <p class="card-text">Описание: <?php echo htmlspecialchars($room['description'] ?? 'Не указано'); ?></p>
-                                    <a href="admin.php?edit_room=<?php echo $room['id']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
+                                    <a href="admin.php?edit_room=<?php echo $room['id']; ?>#rooms-form" class="btn btn-warning btn-sm">Редактировать</a>
                                     <a href="admin.php?delete_room=<?php echo $room['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот номер?');">Удалить</a>
                                 </div>
                             </div>
                         <?php endwhile; ?>
                     </div>
 
-                    <h3 class="mb-3">Управление новостями</h3>
+                    <h3 class="mb-3" id="news-form">Управление новостями</h3>
                     <form method="POST" enctype="multipart/form-data" class="mb-4">
                         <input type="hidden" name="news_id" value="<?php echo $edit_news['id'] ?? ''; ?>">
                         <input type="hidden" name="add_news" value="1">
@@ -503,7 +461,7 @@ if (isset($_GET['edit_room']) && is_numeric($_GET['edit_room'])) {
                                     <h5 class="card-title"><?php echo htmlspecialchars($news_item['title']); ?></h5>
                                     <p class="card-text"><?php echo htmlspecialchars($news_item['content']); ?></p>
                                     <p class="card-text"><small class="text-muted">Дата: <?php echo htmlspecialchars($news_item['created_at']); ?></small></p>
-                                    <a href="admin.php?edit_news=<?php echo $news_item['id']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
+                                    <a href="admin.php?edit_news=<?php echo $news_item['id']; ?>#news-form" class="btn btn-warning btn-sm">Редактировать</a>
                                     <a href="admin.php?delete_news=<?php echo $news_item['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить эту новость?');">Удалить</a>
                                 </div>
                             </div>

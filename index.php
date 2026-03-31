@@ -89,14 +89,16 @@ if (!$news) {
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <?php while ($new = $news->fetch_assoc()): ?>
                             <div class="col">
-                                <div class="news-item">
-                                    <h5 class="news-title"><?php echo htmlspecialchars($new['title']); ?></h5>
-                                    <p class="news-text"><?php echo htmlspecialchars(substr($new['content'], 0, 100)) . (strlen($new['content']) > 100 ? '...' : ''); ?></p>
-                                    <p class="news-date"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
-                                    <?php if ($new['image_url']): ?>
-                                        <img src="<?php echo htmlspecialchars($new['image_url']); ?>" alt="<?php echo htmlspecialchars($new['title']); ?>" class="news-img">
-                                    <?php endif; ?>
-                                </div>
+                                <a href="news_detail.php?id=<?php echo $new['id']; ?>" class="text-decoration-none text-dark">
+                                    <div class="news-item">
+                                        <h5 class="news-title"><?php echo htmlspecialchars($new['title']); ?></h5>
+                                        <p class="news-text"><?php echo htmlspecialchars(substr($new['content'], 0, 100)) . (strlen($new['content']) > 100 ? '...' : ''); ?></p>
+                                        <p class="news-date"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
+                                        <?php if ($new['image_url']): ?>
+                                            <img src="<?php echo htmlspecialchars($new['image_url']); ?>" alt="<?php echo htmlspecialchars($new['title']); ?>" class="news-img">
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
                             </div>
                         <?php endwhile; ?>
                     </div>

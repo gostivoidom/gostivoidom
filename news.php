@@ -60,16 +60,18 @@ if (!$news) {
                     <div class="row">
                         <?php $news->data_seek(0); while ($new = $news->fetch_assoc()): ?>
                             <div class="col-md-4 mb-4">
-                                <div class="card h-100">
-                                    <?php if ($new['image_url']): ?>
-                                        <img src="<?php echo htmlspecialchars($new['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($new['title']); ?>">
-                                    <?php endif; ?>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo htmlspecialchars($new['title']); ?></h5>
-                                        <p class="card-text"><?php echo htmlspecialchars(substr($new['content'], 0, 150)) . (strlen($new['content']) > 150 ? '...' : ''); ?></p>
-                                        <p class="card-text"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
+                                <a href="news_detail.php?id=<?php echo $new['id']; ?>" class="text-decoration-none text-dark">
+                                    <div class="card h-100">
+                                        <?php if ($new['image_url']): ?>
+                                            <img src="<?php echo htmlspecialchars($new['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($new['title']); ?>">
+                                        <?php endif; ?>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?php echo htmlspecialchars($new['title']); ?></h5>
+                                            <p class="card-text"><?php echo htmlspecialchars(substr($new['content'], 0, 150)) . (strlen($new['content']) > 150 ? '...' : ''); ?></p>
+                                            <p class="card-text"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php endwhile; ?>
                     </div>
