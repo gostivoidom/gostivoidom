@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
     <title><?php echo $title; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/contact.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
 </head>
 <body>
     <div class="d-flex flex-column min-vh-100">
@@ -103,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
 <?php $conn->close(); ?>

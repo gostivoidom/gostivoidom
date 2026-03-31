@@ -19,6 +19,7 @@ if (!$news) {
     <title><?php echo $title; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -112,6 +113,7 @@ if (!$news) {
         </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
 <?php $conn->close(); ?>

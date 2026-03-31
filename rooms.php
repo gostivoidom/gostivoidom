@@ -18,6 +18,7 @@ if (!$rooms) {
     <title><?php echo $title; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/rooms.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
     <style>
         /* Дополнительный стиль для управления отступами и внешним видом списка */
         .description-list {
@@ -113,6 +114,7 @@ if (!$rooms) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
 <?php $conn->close(); ?>

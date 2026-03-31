@@ -1,8 +1,8 @@
 <?php
-$host = "sql103.infinityfree.com";
-$db_user = "if0_40777830";
-$db_pass = "uA8nHc0jBVGFK";
-$db_name = "if0_40777830_gostivoidom";
+$host = getenv('DB_HOST') ?: "sql7.freesqldatabase.com";
+$db_user = getenv('DB_USER') ?: "sql7821811";
+$db_pass = getenv('DB_PASS') ?: "w6Ez8DvgsT";
+$db_name = getenv('DB_NAME') ?: "sql7821811";
 
 $conn = new mysqli($host, $db_user, $db_pass, $db_name, 3306);
 if ($conn->connect_error) {
