@@ -1,9 +1,10 @@
 <?php
+ob_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 $title = 'Админ-панель - Гостевой дом "Уют"';
-session_start(); // Только один вызов
+session_start();
 
 // Проверка авторизации администратора
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
@@ -225,10 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['add_room']) || isset(
     if ($name && $price && $capacity) {
         if ($room_id) {
             $stmt = $conn->prepare("UPDATE rooms SET name = ?, price = ?, capacity = ?, description = ?, image_url = ? WHERE id = ?");
-            $stmt->bind_param("siissi", $name, $price, $capacity, $description, $image_url, $room_id);
+            $stmt->bind_param("sdissi", $name, $price, $capacity, $description, $image_url, $room_id);
         } else {
             $stmt = $conn->prepare("INSERT INTO rooms (name, price, capacity, description, image_url) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("siiss", $name, $price, $capacity, $description, $image_url);
+            $stmt->bind_param("sdiss", $name, $price, $capacity, $description, $image_url);
         }
         if ($stmt->execute()) {
             $last_id = $room_id ?: $conn->insert_id;

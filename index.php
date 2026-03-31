@@ -92,7 +92,7 @@ if (!$news) {
                                 <div class="news-item">
                                     <h5 class="news-title"><?php echo htmlspecialchars($new['title']); ?></h5>
                                     <p class="news-text"><?php echo htmlspecialchars(substr($new['content'], 0, 100)) . (strlen($new['content']) > 100 ? '...' : ''); ?></p>
-                                    <p class="news-date"><small class="text-muted">Опубликовано: <?php echo date('d.m.Y', strtotime($new['created_at'])); ?></small></p>
+                                    <p class="news-date"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
                                     <?php if ($new['image_url']): ?>
                                         <img src="<?php echo htmlspecialchars($new['image_url']); ?>" alt="<?php echo htmlspecialchars($new['title']); ?>" class="news-img">
                                     <?php endif; ?>

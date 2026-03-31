@@ -67,7 +67,7 @@ if (!$news) {
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo htmlspecialchars($new['title']); ?></h5>
                                         <p class="card-text"><?php echo htmlspecialchars(substr($new['content'], 0, 150)) . (strlen($new['content']) > 150 ? '...' : ''); ?></p>
-                                        <p class="card-text"><small class="text-muted">Опубликовано: <?php echo date('d.m.Y', strtotime($new['created_at'])); ?></small></p>
+                                        <p class="card-text"><small class="text-muted">Опубликовано: <?php echo $new['created_at'] ? date('d.m.Y', strtotime($new['created_at'])) : 'Не указано'; ?></small></p>
                                     </div>
                                 </div>
                             </div>
