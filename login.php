@@ -5,6 +5,24 @@ include 'db/connect.php';
 if (!isset($conn) || $conn->connect_error) {
     die("Ошибка подключения к базе данных: " . (isset($conn) ? $conn->connect_error : "Переменная \$conn не определена"));
 }
+
+$loginError = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = md5($_POST['password'] ?? '');
+    $stmt = $conn->prepare("SELECT * FROM admin_users WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $_SESSION['admin_logged_in'] = true;
+        header("Location: admin.php");
+        exit;
+    } else {
+        $loginError = "Неверный логин или пароль";
+    }
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,25 +35,9 @@ if (!isset($conn) || $conn->connect_error) {
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Вход для администратора</h2>
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['username'] ?? '';
-            $password = $_POST['password'] ?? '';
-            // Пример проверки логина и пароля (замените на реальную проверку из базы данных)
-            $stmt = $conn->prepare("SELECT * FROM admin_users WHERE username = ? AND password = ?");
-            $stmt->bind_param("ss", $username, md5($password)); // Используйте md5 или другой хэш, соответствующий вашей базе
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
-                $_SESSION['admin_logged_in'] = true;
-                header("Location: admin.php");
-                exit;
-            } else {
-                echo "<div class='alert alert-danger'>Неверный логин или пароль</div>";
-            }
-            $stmt->close();
-        }
-        ?>
+        <?php if ($loginError): ?>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($loginError); ?></div>
+        <?php endif; ?>
         <form method="POST" class="w-50 mx-auto">
             <div class="mb-3">
                 <label for="username" class="form-label">Логин</label>
