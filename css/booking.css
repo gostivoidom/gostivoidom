@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.d-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: #343a40;
+}
+
+h2.text-center {
+    font-family: 'Georgia', serif;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #6c757d;
+}
+
+.form-control {
+    border-radius: 10px;
+    border-color: #8bc34a;
+    padding: 10px;
+}
+
+.form-control:focus {
+    border-color: #6d4c41;
+    box-shadow: 0 0 5px rgba(109, 76, 65, 0.5);
+}
+
+.btn-primary {
+    background-color: #8bc34a;
+    border-color: #8bc34a;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #6d4c41;
+    border-color: #6d4c41;
+}
+
+.alert-success {
+    border-radius: 10px;
+}
+
+/* Стили для календаря */
+.flatpickr-calendar {
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.flatpickr-day {
+    border-radius: 50%;
+}
+
+.flatpickr-day.disabled {
+    color: #ccc;
+    background-color: #f8f9fa;
+}

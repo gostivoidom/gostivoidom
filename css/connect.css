@@ -1,0 +1,13 @@
+/* Стили для connect.php */
+body {
+    background-color: #f8f9fa;
+}
+.container {
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+h2 {
+    color: #007bff;
+}

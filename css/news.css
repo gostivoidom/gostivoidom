@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.d-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: #343a40;
+}
+
+h2.text-center {
+    font-family: 'Georgia', serif;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-text {
+    color: #6c757d;
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+}
