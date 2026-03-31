@@ -1,5 +1,5 @@
 <?php
-$title = "Контакты - Гостевой дом 'Уют'";
+$title = 'Контакты - Гостевой дом "Уют"';
 include 'db/connect.php';
 if (!isset($conn) || $conn->connect_error) {
     die("Ошибка подключения к базе данных: " . (isset($conn) ? $conn->connect_error : "Переменная \$conn не определена"));
