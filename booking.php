@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['book'])) {
         }
 
         if (!$conflict) {
-            $stmt = $conn->prepare("INSERT INTO bookings (room_id, name, email, phone, check_in, check_out) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO bookings (room_id, name, email, phone, check_in, check_out, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
             $stmt->bind_param("isssss", $room_id, $name, $email, $phone, $check_in, $check_out);
             if ($stmt->execute()) {
                 header("Location: booking.php?room_id=$room_id&message=Бронирование успешно оформлено");

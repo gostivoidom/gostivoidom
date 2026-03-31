@@ -14,7 +14,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS feedback_requests (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT NULL
 )");
 
 $conn->query("CREATE TABLE IF NOT EXISTS bookings (
@@ -26,7 +26,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS bookings (
     check_in DATE NOT NULL,
     check_out DATE NOT NULL,
     status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT NULL
 )");
 
 $conn->query("CREATE TABLE IF NOT EXISTS rooms (
@@ -42,6 +42,6 @@ $conn->query("CREATE TABLE IF NOT EXISTS news (
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     image_url VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT NULL
 )");
 ?>

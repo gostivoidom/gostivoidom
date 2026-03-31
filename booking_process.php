@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_in = $conn->real_escape_string($_POST['check_in']);
     $check_out = $conn->real_escape_string($_POST['check_out']);
 
-    $sql = "INSERT INTO bookings (room_id, name, email, phone, check_in, check_out) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO bookings (room_id, name, email, phone, check_in, check_out, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isssss", $room_id, $name, $email, $phone, $check_in, $check_out);
 

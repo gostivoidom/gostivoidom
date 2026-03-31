@@ -54,7 +54,7 @@ CREATE TABLE `bookings` (
   `phone` varchar(20) NOT NULL,
   `check_in` date NOT NULL,
   `check_out` date NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime DEFAULT NULL,
   `status` enum('pending','confirmed','cancelled') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -79,7 +79,7 @@ CREATE TABLE `contacts` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `feedback_requests` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `message` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `news` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
