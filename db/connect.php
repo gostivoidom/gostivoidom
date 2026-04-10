@@ -1,7 +1,7 @@
 <?php
 $host = getenv('DB_HOST') ?: "gostivoidom-gostivoidom-9ef7.h.aivencloud.com";
 $db_user = getenv('DB_USER') ?: "avnadmin";
-$db_pass = getenv('DB_PASS') ?: "<redacted>";
+$db_pass = getenv('DB_PASS') ?: "AVNS_LUWCD8eByJyWVQwig1O";
 $db_name = getenv('DB_NAME') ?: "defaultdb";
 
 $conn = new mysqli($host, $db_user, $db_pass, $db_name, 3306);
