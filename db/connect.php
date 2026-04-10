@@ -1,8 +1,8 @@
 <?php
-$host = getenv('DB_HOST') ?: "sql7.freesqldatabase.com";
-$db_user = getenv('DB_USER') ?: "sql7821811";
-$db_pass = getenv('DB_PASS') ?: "w6Ez8DvgsT";
-$db_name = getenv('DB_NAME') ?: "sql7821811";
+$host = getenv('DB_HOST') ?: "gostivoidom-gostivoidom-9ef7.h.aivencloud.com";
+$db_user = getenv('DB_USER') ?: "avnadmin";
+$db_pass = getenv('DB_PASS') ?: "<redacted>";
+$db_name = getenv('DB_NAME') ?: "defaultdb";
 
 $conn = new mysqli($host, $db_user, $db_pass, $db_name, 3306);
 if ($conn->connect_error) {
