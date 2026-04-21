@@ -73,7 +73,7 @@ if (!$hfToken) {
     exit;
 }
 
-$model = 'meta-llama/Llama-3.1-8B-Instruct';
+$model = 'deepseek-ai/DeepSeek-R1';
 $url = 'https://router.huggingface.co/v1/chat/completions';
 
 $payload = json_encode([
@@ -115,7 +115,7 @@ if ($httpCode !== 200 || !isset($data['choices'][0]['message']['content'])) {
     exit;
 }
 
-$reply = trim($data['choices'][0]['message']['content']);
+$reply = trim(preg_replace('/<think>.*?<\/think>/s', '', $data['choices'][0]['message']['content']));
 echo json_encode(['reply' => $reply]);
 
 $conn->close();
