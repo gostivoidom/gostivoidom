@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-$title = "Новость - Гостевой дом 'Уют'";
+$title = "Новость - Гостевой дом «Уют»";
 include 'db/connect.php';
 if (!isset($conn) || $conn->connect_error) {
     die("Ошибка подключения к базе данных");
@@ -23,7 +23,7 @@ if (!$news_item) {
     exit;
 }
 
-$title = htmlspecialchars($news_item['title']) . " - Гостевой дом 'Уют'";
+$title = htmlspecialchars($news_item['title']) . " - Гостевой дом «Уют»";
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -39,7 +39,7 @@ $title = htmlspecialchars($news_item['title']) . " - Гостевой дом 'У
     <div class="d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="index.php">Гостевой дом 'Уют'</a>
+                <a class="navbar-brand" href="index.php">Гостевой дом «Уют»</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -76,7 +76,7 @@ $title = htmlspecialchars($news_item['title']) . " - Гостевой дом 'У
 
         <footer class="bg-dark text-white text-center py-3">
             <div class="container">
-                <p>&copy; <?php echo date("Y"); ?> Гостевой дом 'Уют'. Все права защищены.</p>
+                <p>&copy; <?php echo date("Y"); ?> Гостевой дом «Уют». Все права защищены.</p>
             </div>
         </footer>
     </div>

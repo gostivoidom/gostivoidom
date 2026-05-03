@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-$title = "Гостевой дом 'Уют'";
+$title = "Гостевой дом «Уют»";
 include 'db/connect.php';
 if (!isset($conn) || $conn->connect_error) {
     die("Ошибка подключения к базе данных: " . (isset($conn) ? $conn->connect_error : "Переменная \$conn не определена"));
@@ -49,12 +49,12 @@ if (!$news) {
 
     <main>
         <section class="full-image text-center">
-            <img src="img/uyt.jpg" alt="Гостевой дом 'Уют'" class="img-fluid w-100">
+            <img src="img/uyt.jpg" alt="Гостевой дом «Уют»" class="img-fluid w-100">
             <div class="overlay-text">
-                <h1 class="welcome-text">Добро пожаловать в гостевой дом 'Уют'</h1>
+                <h1 class="welcome-text">Добро пожаловать в гостевой дом «Уют»</h1>
                 <div class="about-text">
                     <h3>О нас</h3>
-                    <p>Гостевой дом 'Уют' — это место, где природа встречается с комфортом. Уютные номера, домашняя атмосфера и первоклассный сервис ждут вас для идеального отдыха с семьей или друзьями.</p>
+                    <p>Гостевой дом «Уют» — это место, где природа встречается с комфортом. Уютные номера, домашняя атмосфера и первоклассный сервис ждут вас для идеального отдыха с семьей или друзьями.</p>
                 </div>
             </div>
         </section>
@@ -111,7 +111,7 @@ if (!$news) {
 
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
-            <p>© <?php echo date("Y"); ?> Гостевой дом 'Уют'. Все права защищены.</p>
+            <p>© <?php echo date("Y"); ?> Гостевой дом «Уют». Все права защищены.</p>
         </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,5 +1,5 @@
 <?php
-$title = 'Контакты - Гостевой дом "Уют"';
+$title = 'Контакты - Гостевой дом «Уют»';
 include 'db/connect.php';
 if (!isset($conn) || $conn->connect_error) {
     die("Ошибка подключения к базе данных: " . (isset($conn) ? $conn->connect_error : "Переменная \$conn не определена"));
@@ -33,12 +33,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/contact.css" rel="stylesheet">
     <link href="css/chat.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 380px;
+            border-radius: 8px;
+            margin-top: 16px;
+            margin-bottom: 24px;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="index.php"><?php echo $title; ?></a>
+                <a class="navbar-brand" href="index.php">Гостевой дом «Уют»</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -62,14 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
         </nav>
 
         <main class="flex-grow-1">
-            <section>
+            <section class="py-5">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <h2 class="text-center mb-4">Свяжитесь с нами</h2>
                             <p class="text-center">Телефон: +7 (999) 123-45-67</p>
                             <p class="text-center">Email: info@gostivoldom.ru</p>
                             <p class="text-center">Адрес: г. Курск, ул. Примерная, д. 1</p>
+
+                            <h5 class="text-center mt-3 mb-1">Как нас найти</h5>
+                            <div id="map"></div>
 
                             <?php if (isset($success)) echo "<div class='alert alert-success'>$success</div>"; ?>
                             <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
@@ -98,12 +110,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
 
         <footer class="bg-dark text-white text-center py-3">
             <div class="container">
-                <p>© <?php echo date("Y"); ?> Гостевой дом 'Уют'. Все права защищены.</p>
+                <p>© <?php echo date("Y"); ?> Гостевой дом «Уют». Все права защищены.</p>
             </div>
         </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.7304, 36.1936], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.marker([51.7304, 36.1936])
+            .addTo(map)
+            .bindPopup('<b>Гостевой дом «Уют»</b><br>г. Курск, ул. Примерная, д. 1')
+            .openPopup();
+    </script>
     <script src="js/chat.js"></script>
 </body>
 </html>
