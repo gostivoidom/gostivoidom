@@ -6,7 +6,7 @@ if (!isset($conn) || $conn->connect_error) {
 }
 
 $capacity_filter = $_GET['capacity'] ?? '';
-$price_filter = $_GET['price'] ?? '';
+$price_filter = $_GET['price_filter'] ?? '';
 
 $where = [];
 if ($capacity_filter === '1') {
