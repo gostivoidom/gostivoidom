@@ -79,7 +79,7 @@ $url = 'https://router.huggingface.co/v1/chat/completions';
 $payload = json_encode([
     'model' => $model,
     'messages' => $messages,
-    'max_tokens' => 512,
+    'max_tokens' => 900,
     'temperature' => 0.7,
 ]);
 
